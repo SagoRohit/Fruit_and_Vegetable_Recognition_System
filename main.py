@@ -17,7 +17,12 @@ def model_prediction(test_image):
     input_arr = tf.keras.preprocessing.image.img_to_array(image)  # Normalize to [0, 1]
     
     # Add a batch dimension to the input array
-    input_arr = np.expand_dims(input_arr)  # Shape becomes (1, 64, 64, 3)
+    try:
+        input_arr = np.expand_dims(input_arr, axis=0)
+        print(f"Shape after expanding dimensions: {input_arr.shape}")  # Debugging log
+    except Exception as e:
+        print(f"Error: {e}")
+
     
     # Make a prediction
     predictions = model.predict(input_arr)
