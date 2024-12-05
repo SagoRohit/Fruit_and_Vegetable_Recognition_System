@@ -17,7 +17,7 @@ def model_prediction(test_image):
     input_arr = tf.keras.preprocessing.image.img_to_array(image)  # Normalize to [0, 1]
     
     # Add a batch dimension to the input array
-    input_arr = np.expand_dims(input_arr, axis=0)  # Shape becomes (1, 64, 64, 3)
+    input_arr = np.expand_dims(input_arr)  # Shape becomes (1, 64, 64, 3)
     
     # Make a prediction
     predictions = model.predict(input_arr)
@@ -57,16 +57,23 @@ elif(app_mode=="About Project"):
 elif(app_mode=="Prediction"):
     st.header("Model Prediction")
     test_image= st.file_uploader("Upload an image")
-    if(st.button("Show Image")):
-        st.image(test_image, width=4, use_container_width=True)    
-    if(st.button("Predict")):
-        st.balloons()
-        st.write("Our Prediction : ")
-        result_index = model_prediction(test_image)
-        #reding labels
-        with open("label.txt") as f:
-            content = f.readlines()
-        label = []
-        for i in content:
-            label.append(i[:-1])
-        st.success("Model is predicting it's  {}".format(label[result_index]))
+     if test_image is not None:
+        # Show the uploaded image
+        st.image(test_image, caption="Uploaded Image", use_column_width=True)
+        
+        # Prediction button
+        if st.button("Predict"):
+            st.balloons()
+            st.write("Our Prediction:")
+            result_index = model_prediction(test_image)
+            
+            # Reading labels
+            with open("label.txt") as f:
+                content = f.readlines()
+            label = [line.strip() for line in content]
+            
+            # Display the prediction result
+            st.success(f"Model is predicting it's a {label[result_index]}")
+    else:
+        st.warning("Please upload an image to proceed.")
+    
