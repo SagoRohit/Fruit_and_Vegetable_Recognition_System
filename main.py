@@ -57,7 +57,7 @@ elif(app_mode=="About Project"):
 elif(app_mode=="Prediction"):
     st.header("Model Prediction")
     test_image= st.file_uploader("Upload an image")
-     if test_image is not None:
+    if test_image is not None:
         # Show the uploaded image
         st.image(test_image, caption="Uploaded Image", use_column_width=True)
         
