@@ -7,7 +7,7 @@ import numpy as np
 #tensorflow
 def model_prediction(test_image):
     # Load the trained model
-    model = tf.keras.models.load_model("/home/sagor/Books/ML/Fruit_and_vegetable/trained_model.h5")
+    model = tf.keras.models.load_model("trained_model.h5")
     
     # Load and resize the image to the target size
     image = tf.keras.preprocessing.image.load_img(test_image, target_size=(64, 64))
