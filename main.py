@@ -36,7 +36,7 @@ app_mode = st.sidebar.selectbox("Select Page",["Home", "About Project", "Predict
 # main page
 if(app_mode=="Home"):
     st.header("Fruits & Vegetable Recogniton System")
-    image_path = "/home/sagor/Books/ML/Fruit_and_vegetable/veg_image.jpg"
+    image_path = "veg_image.jpg"
     st.image(image_path)
 
 # about project
