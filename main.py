@@ -6,12 +6,23 @@ import numpy as np
 
 #tensorflow
 def model_prediction(test_image):
-    model = tf.keras.models.load_model("trained_model.h5")
-    image = tf.keras.preprocessing.image.load_img(test_image, target_size=(64,64))
-    input_arr = tf.keras.preprocessing.image.img_to_array(image)
-    input_arr = np.array(input_arr) #convert single image to batch
+    # Load the trained model
+    model = tf.keras.models.load_model("/home/sagor/Books/ML/Fruit_and_vegetable/trained_model.h5")
+    
+    # Load and resize the image to the target size
+    image = tf.keras.preprocessing.image.load_img(test_image, target_size=(64, 64))
+    
+    # Convert the image to a NumPy array and normalize pixel values
+    input_arr = tf.keras.preprocessing.image.img_to_array(image)  # Normalize to [0, 1]
+    
+    # Add a batch dimension to the input array
+    input_arr = np.expand_dims(input_arr, axis=0)  # Shape becomes (1, 64, 64, 3)
+    
+    # Make a prediction
     predictions = model.predict(input_arr)
-    return np.argmax(predictions) # return index of max element
+    
+    # Return the index of the highest probability
+    return np.argmax(predictions)
 
 
 
@@ -25,7 +36,7 @@ app_mode = st.sidebar.selectbox("Select Page",["Home", "About Project", "Predict
 # main page
 if(app_mode=="Home"):
     st.header("Fruits & Vegetable Recogniton System")
-    image_path = "veg_image.jpg"
+    image_path = "/home/sagor/Books/ML/Fruit_and_vegetable/veg_image.jpg"
     st.image(image_path)
 
 # about project
